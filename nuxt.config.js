@@ -11,12 +11,22 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { hid: 'description', name: 'description', content: 'Akses kumpulan aplikasi islami portable' },
+      { hid: "theme-color", name: "theme-color", content: "#DD96F9" },
+      { hid: "og:image", name: "og:image", content: "/icon.png" }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png" },
+      { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" },
+      { rel: "icon", type: "image/png", sizes: "96x96", href: "/favicon-96x96.png" }
     ]
   },
+
+    /*
+   ** Customize the progress-bar color
+   */
+   loading: { color: "#DD96F9" },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [

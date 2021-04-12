@@ -1,4 +1,8 @@
-# islamic-portable
+# Islamic Portable
+Islamic Portable adalah sebuah app yang berisi berbagai aplikasi Islami seperti Al Qur'an, Jadwal Sholat, Artikel Islami, dll.
+
+## Live Website
+[https://islamic-portable.netlify.com/](https://islamic-portable.netlify.com/)
 
 ## Build Setup
 
@@ -9,12 +13,15 @@ $ npm install
 # serve with hot reload at localhost:3000
 $ npm run dev
 
-# build for production and launch server
-$ npm run build
-$ npm run start
-
 # generate static project
 $ npm run generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+## Credit
+[quran-json](https://github.com/rioastamal/quran-json) by [@rioastamal](https://github.com/rioastamal)
+
+[quran-offline](https://github.com/mazipan/quran-offline) by [@mazipan](https://github.com/mazipan)
+
+----
+
+Copyright © 2021 by Ibrohim Mahmud Hanafi

@@ -1,4 +1,5 @@
 # Islamic Portable
+### Aplikasi Islami dalam Genggaman
 Islamic Portable adalah sebuah app yang berisi berbagai aplikasi Islami seperti Al Qur'an, Jadwal Sholat, Artikel Islami, dll.
 
 ## Live Website

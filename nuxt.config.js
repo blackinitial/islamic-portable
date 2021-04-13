@@ -7,11 +7,11 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'islamic-portable',
+    title: 'Islamic Portable',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Akses kumpulan aplikasi islami portable' },
+      { hid: 'description', name: 'description', content: 'Aplikasi Islami dalam Genggaman' },
       { hid: "theme-color", name: "theme-color", content: "#DD96F9" },
       { hid: "og:image", name: "og:image", content: "/icon.png" }
     ],

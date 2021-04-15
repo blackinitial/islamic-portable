@@ -3,13 +3,15 @@
     <!-- navbar -->
     <van-nav-bar
       :title="surahDetail.name_latin"
-      left-arrow
+      left-arrow fixed z-index="5"
       @click-left="() => $router.back()" />
     <!-- hero title -->
     <div class="hero">
-      <h1 class="title">{{ surahDetail.name }}</h1>
+      <van-skeleton :row="2" style="margin-bottom: 24px" :loading="loading" />
+      <h1 class="arabic bold">{{ surahDetail.name }}</h1>
       <h4 class="subtitle">{{ surahDetail.translations && surahDetail.translations.id.name }}</h4>
       <hr style="width: 50%" />
+      <van-skeleton :row="1" style="margin-bottom: 24px" :loading="loading" />
       <h4 class="subtitle">Surat ke {{ surahDetail.number }} &bull; {{ surahDetail.number_of_ayah }} Ayat</h4>
       <svg width="210" height="32" viewBox="0 0 210 32" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0)">
@@ -99,7 +101,7 @@ export default {
   overflow: hidden;
   animation: 1s appear;
   z-index: 1;
-  margin-bottom: 48px;
+  margin: 24px 0 48px 0;
 }
 .hero .bg {
   position: absolute;
@@ -145,12 +147,17 @@ export default {
 }
 .ayah-text .arabic {
   text-align: right;
-  font-size: 24px;
-  color: #251150;
 }
 .ayah-text .translation {
   text-align: left;
   font-size: 16px;
   color: #3B1D77;
+}
+
+/* skeleton custom */
+.van-skeleton__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

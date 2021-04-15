@@ -30,7 +30,7 @@
         <van-cell 
           v-for="(surah, index) in surahInfoArray"
           :key="`surah-${index}`" size="large"
-          :title="surah.latin" :value="surah.arabic" value-class="surah-arabic"
+          :title="surah.latin" :value="surah.arabic" value-class="arabic"
           :label="`${surah.translation} • ${surah.ayah_count} Ayat`" center
           :to="getSurahDetailUrl(surah, index)">
           <template #icon>
@@ -40,9 +40,6 @@
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M49 20.7157L57.2843 29L49 37.2843V49H37.2843L29 57.2843L20.7158 49H9.00003V37.2843L0.715759 29L9.00003 20.7157V9H20.7158L29 0.715729L37.2843 9H49V20.7157ZM54.4559 29L47 36.4558V47H36.4559L29 54.4558L21.5442 47H11V36.4558L3.54419 29L11 21.5442V11H21.5442L29 3.54416L36.4559 11H47V21.5442L54.4559 29Z" fill="#8855CC"/>
               </svg>
             </div>
-          </template>
-          <template #value>
-            <span class="ayah-arabic">{{ surah.arabic }}</span>
           </template>
         </van-cell>
 
@@ -132,11 +129,6 @@ export default {
 }
 .ayah-number .icon {
   width: 40px;
-}
-.surah-arabic {
-  color: #8855CC;
-  font-size: 18px;
-  font-weight: bold;
 }
 @keyframes appear {
   0% {

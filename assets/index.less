@@ -1,0 +1,44 @@
+@import 'vant/lib/index.less';
+
+// color
+:root {
+  --primary-color-h: 259;
+  --primary-color-s: 65%;
+  --primary-color-l: 19%;
+  --primary-color-a: 1;
+
+  --primary-color-light-l-1: calc(var(--primary-color-l) + 10%);
+  --primary-color-light-l-2: calc(var(--primary-color-l) + 20%);
+  --primary-color-light-l-3: calc(var(--primary-color-l) + 30%);
+  --primary-color-light-l-4: calc(var(--primary-color-l) + 40%);
+  --primary-color-light-l-5: calc(var(--primary-color-l) + 50%);
+  --primary-color-light-l-6: calc(var(--primary-color-l) + 60%);
+  --primary-color-light-l-7: calc(var(--primary-color-l) + 70%);
+  --primary-color-light-l-8: calc(var(--primary-color-l) + 80%);
+}
+
+@gray-1: hsla(259, 65%, 97%, 1);
+@gray-2: hsla(259, 65%, 91%, 1);
+@gray-3: hsla(259, 65%, 79%, 1);
+@gray-4: hsla(259, 65%, 67%, 1);
+@gray-5: hsla(259, 65%, 55%, 1);
+@gray-6: hsla(259, 65%, 43%, 1);
+@gray-7: hsla(259, 65%, 31%, 1);
+@gray-8: hsla(259, 65%, 19%, 1);
+
+// Font
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Scheherazade:wght@400;700&display=swap');
+@base-font-family: 'Poppins', serif;
+
+// navbar
+@nav-bar-arrow-size: 24px;
+@nav-bar-icon-color: @gray-4;
+
+// utility
+.arabic {
+  font-family: 'Scheherazade', serif;
+  font-size: 28px;
+}
+.bold {
+  font-weight: 700;
+}

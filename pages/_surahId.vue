@@ -4,11 +4,13 @@
     <van-nav-bar
       :title="surahDetail.name_latin"
       left-arrow fixed z-index="5"
-      @click-left="() => $router.back()" />
+      @click-left="() => $router.push('/')" />
     <!-- hero title -->
     <div class="hero">
+      <img class="hero__bg" src="/quran.webp" alt="al qur'an">
       <van-skeleton :row="2" style="margin-bottom: 24px" :loading="loading" />
-      <h1 class="arabic bold">{{ surahDetail.name }}</h1>
+      <div class="hero__text-decor">{{ surahDetail.name }}</div>
+      <h1 class="title bold">{{ surahDetail.name_latin }}</h1>
       <h4 class="subtitle">{{ surahDetail.translations && surahDetail.translations.id.name }}</h4>
       <hr style="width: 50%" />
       <van-skeleton :row="1" style="margin-bottom: 24px" :loading="loading" />
@@ -23,7 +25,12 @@
         </clipPath>
         </defs>
       </svg>
-      <img class="bg" src="/quran.webp" alt="al qur'an">
+    </div>
+
+    <!-- setting -->
+    <div class="setting">
+      <label class="label">Terjemahan</label>
+      <van-switch size="24" v-model="isTranslation" />
     </div>
 
     <!-- loading skeleton -->
@@ -47,8 +54,47 @@
 
       <div class="ayah-text">
         <p class="arabic">{{ ayah }}</p>
-        <p class="translation">{{ getTranslation(index) }}</p>
+        <transition name="van-fade">
+          <p v-show="isTranslation" class="translation">{{ getTranslation(index) }}</p>
+        </transition>
       </div>
+    </div>
+
+    <!-- paginate -->
+    <div class="paginate">
+      <van-pagination >
+        <template #prev-text>
+          <nuxt-link
+            v-if="isHavePrev"
+            :to="`/${surahId - 1}`"
+            class="paginate__link">
+            <van-icon name="arrow-left" />
+          </nuxt-link>
+          <span v-else class="van-pagination__item--disabled"></span>
+        </template>
+        <template #next-text>
+          <nuxt-link
+            v-if="isHaveNext"
+            :to="`/${surahId + 1}`"
+            class="paginate__link">
+            <van-icon name="arrow" />
+          </nuxt-link>
+          <span v-else class="van-pagination__item--disabled"></span>
+        </template>
+        <template #page>
+          <div class="ayah-picker" @click="showPicker = true">Cari Ayat</div>
+          <van-popup v-model="showPicker" round position="bottom">
+            <van-picker
+              title="Cari Ayat"
+              show-toolbar
+              :columns="[1,2,3,4,5]"
+              @cancel="showPicker = false"
+              cancel-button-text="Batal"
+              confirm-button-text="Konfirmasi"
+            />
+          </van-popup>
+        </template>
+      </van-pagination>
     </div>
   </section>
 </template>
@@ -60,11 +106,19 @@ export default {
   name: 'SurahDetail',
   data: () => ({
     surahDetail: {},
-    loading: true
+    loading: true,
+    isTranslation: false,
+    showPicker: false
   }),
   computed: {
     surahId() {
       return Number(this.$route.params.surahId)
+    },
+    isHavePrev() {
+      return this.surahId > 1
+    },
+    isHaveNext() {
+      return this.surahId < 114
     }
   },
   mounted() {
@@ -88,7 +142,7 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="less" scoped>
 .hero {
   background: linear-gradient(135deg, #DD96F9, #995CFE);
   box-shadow: 0px 4px 20px 0px #995cfe94;
@@ -101,16 +155,36 @@ export default {
   overflow: hidden;
   animation: 1s appear;
   z-index: 1;
-  margin: 24px 0 48px 0;
-}
-.hero .bg {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  transform: scale(1.5) translateX(0%) rotate(-20deg);
-  opacity: .25;
-  z-index: -1;
-  pointer-events: none;
+  margin: 24px 0 24px 0;
+  &__bg {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: scale(1.5) translateX(0%) rotate(-20deg);
+    opacity: .25;
+    z-index: -1;
+    pointer-events: none;
+  }
+  &__text-decor {
+    font-family: 'Scheherazade', serif;
+    font-size: 120px;
+    font-weight: 700;
+    color: #fff;
+    opacity: .15;
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .title, .subtitle {
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+  hr {
+    margin-bottom: 1.5rem;
+  }
 }
 @keyframes appear {
   0% {
@@ -122,36 +196,75 @@ export default {
   background: rgb(221 150 249 / 10%);
   padding: 12px;
   border-radius: 8px;
+  transition: all .5s;
+  .ayah-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .action-group {
+      display: flex;
+      align-items: center;
+      .icon {
+        margin-left: 12px;
+      }
+    }
+    .number {
+      background: #8855CC;
+      color: #fff;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .ayah-text {
+    transition: all .5s;
+    .arabic {
+      text-align: right;
+      margin: 0;
+    }
+    .translation {
+      text-align: left;
+      font-size: 16px;
+      color: #3B1D77;
+      margin: 0;
+      margin-top: 24px;
+    }
+  }
 }
-.ayah-action {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.ayah-action .action-group {
-  display: flex;
-  align-items: center;
-}
-.ayah-action .action-group .icon {
-  margin-left: 12px;
-}
-.ayah-action .number {
-  background: #8855CC;
-  color: #fff;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
+
+.setting {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 24px;
+  .label {
+    margin-right: 8px;
+  }
 }
-.ayah-text .arabic {
-  text-align: right;
+
+.paginate {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  &__link {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  .ayah-picker {
+    white-space: nowrap;
+    width: 150px;
+    text-align: center;
+  }
 }
-.ayah-text .translation {
-  text-align: left;
-  font-size: 16px;
-  color: #3B1D77;
+::v-deep .van-pagination__page {
+  flex-grow: 1 !important;
 }
 
 /* skeleton custom */

@@ -34,6 +34,26 @@
 @nav-bar-arrow-size: 24px;
 @nav-bar-icon-color: @gray-4;
 
+// switch
+@switch-on-background-color: @gray-5;
+
+// paginate
+@pagination-item-default-color: @gray-4;
+
+// hack
+body {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: @gray-1;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: @gray-3;
+    border-radius: 4px;
+  }
+}
+
 // utility
 .arabic {
   font-family: 'Scheherazade', serif;

@@ -26,7 +26,6 @@ html {
 }
 .container {
   box-sizing: border-box;
-  width: 100%;
   min-height: 100vh;
   padding: 46px 20px 20px;
   background: #fff;

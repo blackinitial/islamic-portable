@@ -78,7 +78,9 @@ export default {
           return response.json()
         })
         .then(data => {
-          this.surahInfoArray = data.surah_info
+          this.surahInfoArray = data.surah_info.map((item, idx) => {
+            return Object.assign({}, item, {index: idx+1})
+          })
           this.loading = false
         })
     }

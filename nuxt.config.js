@@ -1,3 +1,17 @@
+const getOfflineAssets = () => {
+  let res = [
+    '/favicon.ico',
+    '/favicon-32x32.png',
+    '/favicon-96x96.png',
+    '/icon-192x192.png',
+    '/data/surah-info.json'
+  ]
+  for(let i=0; i< 114; i++) {
+    res.push(`/data/surah/${i+1}.json`)
+  }
+  return res
+}
+
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -46,6 +60,17 @@ export default {
   buildModules: [
   ],
 
+  // Generate multiple entry html from 1 to 114
+   generate: {
+    routes: () => {
+      let res = []
+      for(let i=0; i< 114; i++) {
+        res.push(`/${i+1}`)
+      }
+      return res
+    }
+  },
+
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/pwa
@@ -55,7 +80,11 @@ export default {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
-      lang: 'en'
+      name: 'Islamic Portable',
+      short_name: 'Islamic'
+    },
+    workbox: {
+      offlineAssets: getOfflineAssets()
     }
   },
 

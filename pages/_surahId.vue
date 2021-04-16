@@ -11,7 +11,7 @@
       <van-skeleton :row="2" style="margin-bottom: 24px" :loading="loading" />
       <div class="hero__text-decor">{{ surahDetail.name }}</div>
       <h1 class="title bold">{{ surahDetail.name_latin }}</h1>
-      <h4 class="subtitle">{{ surahDetail.translations && surahDetail.translations.id.name }}</h4>
+      <h4 class="subtitle">{{ surahDetail.translations.id.name }}</h4>
       <hr style="width: 50%" />
       <van-skeleton :row="1" style="margin-bottom: 24px" :loading="loading" />
       <h4 class="subtitle">Surat ke {{ surahDetail.number }} &bull; {{ surahDetail.number_of_ayah }} Ayat</h4>
@@ -105,7 +105,19 @@ import { ApiPath } from '../constant'
 export default {
   name: 'SurahDetail',
   data: () => ({
-    surahDetail: {},
+    surahDetail: {
+      number: 0,
+      name: '',
+      name_latin: '',
+      number_of_ayah: '',
+      text: [],
+      translations: {
+        id: {
+          name: '',
+          text: ''
+        }
+      }
+    },
     loading: true,
     isTranslation: false,
     showPicker: false

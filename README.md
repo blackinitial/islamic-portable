@@ -1,7 +1,7 @@
 # Islamic Portable
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2e2dc5ef-c4d1-4e86-a67e-833301e0c866/deploy-status)](https://app.netlify.com/sites/islamic-portable/deploys)
 ### Aplikasi Islami dalam Genggaman
-Islamic Portable adalah sebuah app yang berisi berbagai aplikasi Islami seperti Al Qur'an, Jadwal Sholat, Artikel Islami, dll.
+Islamic Portable adalah sebuah app yang berisi berbagai aplikasi Islami seperti Al Qur'an, Do'a Harian, Artikel Islami, Jadwal Sholat, dll.
 
 ## Live Website
 [https://islamic-portable.netlify.com/](https://islamic-portable.netlify.com/)
@@ -18,6 +18,12 @@ $ npm run dev
 # generate static project
 $ npm run generate
 ```
+
+## Feature
+- [x] Al Qur'an
+- [ ] Do'a Harian
+- [ ] Artikel Islami
+- [ ] Jadwal Sholat
 
 ## Credit
 [quran-json](https://github.com/rioastamal/quran-json) by [@rioastamal](https://github.com/rioastamal)

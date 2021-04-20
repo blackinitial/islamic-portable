@@ -28,7 +28,7 @@
       <!-- list surah -->
       <van-cell-group>
         <van-cell 
-          v-for="(surah, index) in surahInfoArray"
+          v-for="(surah, index) in $store.state.surah.allSurahList"
           :key="`surah-${index}`" size="large"
           :title="surah.latin" :value="surah.arabic" value-class="arabic"
           :label="`${surah.translation} • ${surah.ayah_count} Ayat`" center
@@ -51,7 +51,8 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
-import { ApiPath } from '../constant'
+import { __isNotEmptyString } from '~/utils'
+
 export default {
   name: 'Home',
   components: {
@@ -61,6 +62,12 @@ export default {
     surahInfoArray: [],
     loading: true
   }),
+
+  computed: {
+    isHaveSource() {
+      return __isNotEmptyString(this.$route.query.source)
+    }
+  },
 
   mounted() {
     this.fetchSurahInfo()
@@ -72,17 +79,15 @@ export default {
     },
 
     fetchSurahInfo() {
-      fetch(ApiPath.SURAH_INFO)
-        .then(response => {
-          console.log('get surah datas')
-          return response.json()
-        })
-        .then(data => {
-          this.surahInfoArray = data.surah_info.map((item, idx) => {
-            return Object.assign({}, item, {index: idx+1})
-          })
-          this.loading = false
-        })
+      this.$store.dispatch('surah/fetchAllSurah', {
+        success: () => {
+          if (!this.isHaveSource) {
+            setTimeout(() => {
+              this.loading = false
+            }, 1000)
+          } else this.loading = false
+        }
+      })
     }
   }
 }

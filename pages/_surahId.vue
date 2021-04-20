@@ -100,29 +100,19 @@
 </template>
 
 <script>
-import { ApiPath } from '../constant'
+import { mapState } from 'vuex'
 
 export default {
   name: 'SurahDetail',
   data: () => ({
-    surahDetail: {
-      number: 0,
-      name: '',
-      name_latin: '',
-      number_of_ayah: '',
-      text: [],
-      translations: {
-        id: {
-          name: '',
-          text: ''
-        }
-      }
-    },
     loading: true,
     isTranslation: false,
     showPicker: false
   }),
   computed: {
+    ...mapState({
+      surahDetail: state => state.surah.surahDetail
+    }),
     surahId() {
       return Number(this.$route.params.surahId)
     },
@@ -134,19 +124,18 @@ export default {
     }
   },
   mounted() {
-    this.fetchSurahById(this.surahId)
+    this.onMountedDetailPage(this.surahId)
   },
   methods: {
-    fetchSurahById(id) {
-      fetch(ApiPath.SURAH_BY_ID(id))
-        .then(response => {
-          return response.json()
-        })
-        .then(data => {
-          console.log('get surah detail')
-          this.surahDetail = data[this.surahId]
-          this.loading = false
-        })
+    onMountedDetailPage(id) {
+      this.$store.dispatch('surah/fetchSurahById', {
+        id,
+        success: () => {
+          setTimeout(() => {
+            this.loading = false
+          }, 1000)
+        }
+      })
     },
     getTranslation(indexAyah) {
       return this.surahDetail.translations.id.text[indexAyah]

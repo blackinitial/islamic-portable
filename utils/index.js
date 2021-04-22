@@ -6,7 +6,7 @@ export const __isNotNull = (variable) => {
 };
 
 export const __isNotEmptyString = (str) => {
-  if (__isNotNull(str) && str !== '') {
+  if (__isNotNull(str) && str.trim() !== '') {
     return true;
   }
   return false;
@@ -25,6 +25,13 @@ export const __isFunction = (fn) => {
   }
   return false;
 };
+
+export const __isNumber = (variable) => {
+  if (__isNotNull(variable) && typeof variable === 'number') {
+    return true;
+  }
+  return false;
+}
 
 export const __slugify = (val) => {
   if (val === null || val === '') return '';

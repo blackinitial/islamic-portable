@@ -17,7 +17,7 @@ export const state = () => ({
       }
     }
   },
-  surahFavorite:[],
+  favoriteSurah:[],
   lastReadAyah: null
 })
 
@@ -28,8 +28,8 @@ export const mutations = {
   setSurahDetail(state, data) {
     state.surahDetail = data
   },
-  setSurahFavorite (state, data) {
-    state.surahFavorite = data
+  setFavoriteSurah (state, data) {
+    state.favoriteSurah = data
   },
   setLastReadAyah (state, data) {
     state.lastReadAyah = data
@@ -77,5 +77,32 @@ export const actions = {
           success && success(data[id])
         })
     }
+  },
+  readDataFromStorage ({ commit }) {
+    const cacheFavoriteSurah = getItem(storageKey.FAVORITE_SURAH) || []
+    commit('setFavoriteSurah', cacheFavoriteSurah)
+    const cacheLastReadAyah = getItem(storageKey.LAST_READ_AYAH) || {}
+    commit('setLastReadAyah', cacheLastReadAyah)
+  },
+  addToFavoriteSurah ({ commit, state }, surah) {
+    const isExist = state.favoriteSurah.find(item => item.index === surah.index)
+    if (!isExist) {
+      const newFavorite = [].concat(state.favoriteSurah).concat([surah])
+      commit('setFavoriteSurah', newFavorite)
+      setItem(storageKey.FAVORITE_SURAH, newFavorite)
+    }
+  },
+  removeFromFavorite ({ commit, state }, surah) {
+    const isExist = state.favoriteSurah.find(item => item.index === surah.index)
+    if (isExist) {
+      const newFavorite = state.favoriteSurah.filter(item => item.index !== surah.index) || []
+      commit('setFavoriteSurah', newFavorite)
+      setItem(storageKey.FAVORITE_SURAH, newFavorite)
+    }
+  },
+  setLastReadAyah ({ commit, state }, { surah, ayah }) {
+    const data = { surah, ayah }
+    commit('setLastReadAyah', data)
+    setItem(storageKey.LAST_READ_AYAH, data)
   }
 }

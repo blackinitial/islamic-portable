@@ -4,14 +4,14 @@
       <logo />
       <h4>Aplikasi Islami dalam Genggaman</h4>
 
-      <div class="home-slide">
-        <div class="info">
-          <van-icon name="label" />
-          <span>Terakhir Dibaca</span>
-        </div>
-        <div class="detail">
-          <div class="title">Al Fatihah</div>
-          <div class="subtitle">Ayat 6</div>
+      <lastReadAyahCard v-if="isHaveLastReadAyah" :surah="lastReadAyahData" />
+      <div v-else class="card">
+        <div class="content">
+          <span class="title">Belum baca Al-Qur'an hari ini ?</span>
+          <van-button 
+            to="/1"
+            round type="default" 
+            size="small">Cuss Baca</van-button>
         </div>
         <img class="bg" src="/quran.webp" alt="al qur'an">
       </div>
@@ -27,6 +27,8 @@
       <!-- search modal -->
       <van-popup v-model="searchModal" 
         round closeable close-icon="close" 
+        @click-close-icon="searchText = ''"
+        @click-overlay="searchText = ''"
         position="bottom" :style="{ height: '60%' }">
         <div class="modal-container">
           <van-search 
@@ -86,13 +88,15 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import { __isNotEmptyString, __isNumber } from '~/utils'
+import Logo from '~/components/Logo'
+import lastReadAyahCard from '~/components/LastReadAyahCard'
+import { __isNotEmptyString, __isNotNull, __isNumber } from '~/utils'
 
 export default {
   name: 'Home',
   components: {
-    Logo
+    Logo,
+    lastReadAyahCard
   },
   data: () => ({
     loading: true,
@@ -101,8 +105,20 @@ export default {
   }),
 
   computed: {
+    isHaveLastReadAyah() {
+      return __isNotNull(this.$store.state.surah.lastReadAyah && this.$store.state.surah.lastReadAyah.surah)
+    },
     isHaveSource() {
       return __isNotEmptyString(this.$route.query.source)
+    },
+    lastReadAyahData() {
+      if (this.isHaveLastReadAyah) {
+        const res = this.$store.state.surah.allSurahList.find(
+          item => item.index === this.$store.state.surah.lastReadAyah.surah
+        )
+        return Object.assign({}, res, { ayah: this.$store.state.surah.lastReadAyah.ayah })
+      }
+      return null
     },
     filteredSurah() {
       if (__isNotEmptyString(this.searchText) && !isNaN(this.searchText)) {
@@ -150,36 +166,37 @@ export default {
 }
 </script>
 
-<style>
-.home-slide {
+<style lang="less">
+.card {
   background: linear-gradient(135deg, #DD96F9, #995CFE);
   border-radius: 8px;
   padding: 16px;
   color: #fff;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-content: space-between;
   height: 100px;
   overflow: hidden;
   animation: 1s appear;
   z-index: 1;
-}
-.home-slide .title {
-  font-weight: bold;
-}
-.home-slide .subtitle {
-  opacity: 0.8;
-}
-.home-slide .bg {
-  position: absolute;
-  bottom: -15%;
-  right: 0;
-  transform: scale(.8) translateX(10%) rotate(25deg);
-  opacity: .75;
-  z-index: -1;
-  pointer-events: none;
+  .content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .title {
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+  .bg {
+    position: absolute;
+    bottom: -15%;
+    right: 0;
+    transform: scale(.8) translateX(10%) rotate(25deg);
+    opacity: .75;
+    z-index: -1;
+    pointer-events: none;
+  }
 }
 .ayah-number {
   display: flex;

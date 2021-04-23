@@ -53,7 +53,7 @@
             class="icon" :size="24" 
             color="#8855CC" name="label-o" />
           <van-icon 
-            @click="shareAyah(ayah, Number(index))"
+            @click="shareAyah(surahDetail.name_latin, ayah, Number(index))"
             class="icon" :size="24" 
             color="#8855CC" name="share-o" />
         </div>
@@ -164,12 +164,13 @@ export default {
     getNumberAyahArray() {
       return Array.from(Array(Number(this.surahDetail.number_of_ayah)).keys(), n => n + 1)
     },
-    shareAyah(ayah, index) {
-      // console.log(`${ayah}\n\nartinya:\n${this.getTranslation(index)}\n\nIslamic Portable App\nhttps://islamic-portable.netlify.com`)
+    shareAyah(surah, ayah, index) {
+      // console.log(`${ayah}\n\nartinya:\n${this.getTranslation(index)}\n(${surah}:${index})\n\nIslamic Portable App\nhttps://islamic-portable.netlify.com`)
+
       if (navigator.share) {
         navigator.share({
-          title: `QS ${this.surahId}:${index}`,
-          text: `${ayah} (${this.getTranslation(index)})`,
+          title: `${surah}:${index}`,
+          text: `${ayah}\n\nartinya:\n${this.getTranslation(index)}\n(${surah}:${index})\n\nIslamic Portable App\nhttps://islamic-portable.netlify.com`,
           url: `https://islamic-portable.netlify.com/${this.surahId}#ayah-${index}`
         })
       } else {

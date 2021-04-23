@@ -53,6 +53,7 @@
             class="icon" :size="24" 
             color="#8855CC" name="label-o" />
           <van-icon 
+            @click="shareAyah(ayah, Number(index))"
             class="icon" :size="24" 
             color="#8855CC" name="share-o" />
         </div>
@@ -107,7 +108,7 @@
 </template>
 
 <script>
-import { Toast } from 'vant'
+import { Toast, Notify } from 'vant'
 import { mapState } from 'vuex'
 
 export default {
@@ -162,6 +163,19 @@ export default {
     },
     getNumberAyahArray() {
       return Array.from(Array(Number(this.surahDetail.number_of_ayah)).keys(), n => n + 1)
+    },
+    shareAyah(ayah, index) {
+      // console.log(`${ayah}\n\nartinya:\n${this.getTranslation(index)}\n\nIslamic Portable App\nhttps://islamic-portable.netlify.com`)
+      if (navigator.share) {
+        navigator.share({
+          title: `QS ${this.surahId}:${index}`,
+          text: `${ayah} (${this.getTranslation(index)})`,
+          url: `https://islamic-portable.netlify.com/${this.surahId}#ayah-${index}`
+        })
+      } else {
+        console.log('web share not support')
+        Notify({ type: 'warning', message: 'Fitur Share tidak mendukung' });
+      }
     }
   }
 }

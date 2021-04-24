@@ -58,7 +58,7 @@
 
       <!-- loading skeleton -->
       <van-skeleton 
-        v-for="n in 5" :key="n" avatar
+        v-for="n in 10" :key="n" avatar
         title :row="1" row-width="100%"
         style="margin-bottom: 16px"
         :loading="loading" />

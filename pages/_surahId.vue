@@ -51,10 +51,12 @@
           <van-icon 
             @click="onSetLastReadAyah(index)"
             class="icon" :size="24" 
-            color="#8855CC" name="label-o" />
+            title="Simpan baca terakhir"
+            color="#8855CC" :name="getIconLastReadAyah(surahDetail.number, index)" />
           <van-icon 
             @click="shareAyah(surahDetail.name_latin, ayah, Number(index))"
             class="icon" :size="24" 
+            title="Bagikan Ayat"
             color="#8855CC" name="share-o" />
         </div>
       </div>
@@ -110,6 +112,7 @@
 <script>
 import { Toast, Notify } from 'vant'
 import { mapState } from 'vuex'
+import { __isNotNull } from '~/utils'
 
 export default {
   name: 'SurahDetail',
@@ -164,18 +167,35 @@ export default {
     getNumberAyahArray() {
       return Array.from(Array(Number(this.surahDetail.number_of_ayah)).keys(), n => n + 1)
     },
+    getIconLastReadAyah(surah, ayah) {
+      const lastRead = this.$store.state.surah.lastReadAyah
+      const isHaveLastRead = __isNotNull(lastRead && lastRead.surah)
+      const isCurrentSurah = lastRead.surah == surah
+      const iscurrentAyah = lastRead.ayah == ayah
+      if (isHaveLastRead && isCurrentSurah && iscurrentAyah) {
+        return 'label'
+      } else return 'label-o'
+    },
     shareAyah(surah, ayah, index) {
-      // console.log(`${ayah}\n\nartinya:\n${this.getTranslation(index)}\n(${surah}:${index})\n\nIslamic Portable App\nhttps://islamic-portable.netlify.com`)
+      // console.log(`${ayah}\n\nArtinya:\n${this.getTranslation(index)}\n(${surah}:${index})\n\nIslamic Portable App`)
 
       if (navigator.share) {
         navigator.share({
           title: `${surah}:${index}`,
-          text: `${ayah}\n\nartinya:\n${this.getTranslation(index)}\n(${surah}:${index})\n\nIslamic Portable App\nhttps://islamic-portable.netlify.com`,
-          url: `https://islamic-portable.netlify.com/${this.surahId}#ayah-${index}`
+          text: `${ayah}\n\nArtinya:\n${this.getTranslation(index)}\n(${surah}:${index})\n\nIslamic Portable App`,
+          url: `https://islamic-portable.netlify.com`
         })
       } else {
-        console.log('web share not support')
-        Notify({ type: 'warning', message: 'Fitur Share tidak mendukung' });
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(`${ayah}\n\nArtinya:\n${this.getTranslation(index)}\n(${surah}:${index})\n\nIslamic Portable App\nhttps://islamic-portable.netlify.com`)
+          Toast({
+            message: `Ayat ${index} telah disalin`,
+            icon: 'orders-o',
+          })
+        } else {
+          Notify({ type: 'warning', message: 'Fitur Share/clipboard tidak mendukung !' });
+          console.warn('web share and clipboard not support !')
+        }
       }
     }
   }

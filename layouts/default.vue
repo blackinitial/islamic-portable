@@ -1,14 +1,20 @@
 <template>
   <div>
+    <Header />
     <Nuxt />
   </div>
 </template>
 
 <script>
+import Header from '~/components/Header'
 export default {
   name: 'DefaultLayout',
+  components: {
+    Header
+  },
   mounted() {
     this.$store.dispatch('surah/readDataFromStorage')
+    this.$store.dispatch('surah/fetchAllSurah', {success: () => {}})
   }
 }
 </script>

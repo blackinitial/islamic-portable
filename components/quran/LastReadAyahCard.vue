@@ -2,15 +2,15 @@
   <div 
     @click="goToSurahDetail(surah.index, surah.ayah)"
     class="card">
-    <div class="info">
+    <div class="card__info">
       <van-icon name="label" />
       <span>Terakhir Dibaca</span>
     </div>
-    <div class="detail">
-      <div class="title">{{ surah.latin }}</div>
-      <div class="subtitle">Ayat {{ surah.ayah }}</div>
+    <div class="card__detail">
+      <div class="card__title">{{ surah.latin }}</div>
+      <div class="card__subtitle">Ayat {{ surah.ayah }}</div>
     </div>
-    <img class="bg" src="/quran.webp" alt="al qur'an">
+    <img class="card__bg" src="/quran.webp" alt="al qur'an">
   </div>
 </template>
 <script>
@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     getSurahDetailUrl(index, ayah) {
-      return `/${index}#ayah-${ayah}`
+      return `/quran/${index}#ayah-${ayah}`
     },
     goToSurahDetail(index, ayah) {
       const path = this.getSurahDetailUrl(index, ayah)
@@ -56,13 +56,13 @@ export default {
   animation: 1s appear;
   z-index: 1;
   cursor: pointer;
-  .title {
+  &__title {
     font-weight: bold;
   }
-  .subtitle {
+  &__subtitle {
     opacity: 0.8;
   }
-  .bg {
+  &__bg {
     position: absolute;
     bottom: -15%;
     right: 0;

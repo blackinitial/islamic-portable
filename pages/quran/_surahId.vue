@@ -1,10 +1,10 @@
 <template>
   <section class="container">
     <!-- navbar -->
-    <van-nav-bar
+    <!-- <van-nav-bar
       :title="surahDetail.name_latin"
       left-arrow fixed z-index="5"
-      @click-left="() => $router.push('/')" />
+      @click-left="() => $router.push('/quran')" /> -->
     <!-- hero title -->
     <div class="hero">
       <img class="hero__bg" src="/quran.webp" alt="al qur'an">
@@ -75,7 +75,7 @@
         <template #prev-text>
           <nuxt-link
             v-if="isHavePrev"
-            :to="`/${surahId - 1}`"
+            :to="`/quran/${surahId - 1}`"
             class="paginate__link">
             <van-icon name="arrow-left" />
           </nuxt-link>
@@ -84,7 +84,7 @@
         <template #next-text>
           <nuxt-link
             v-if="isHaveNext"
-            :to="`/${surahId + 1}`"
+            :to="`/quran/${surahId + 1}`"
             class="paginate__link">
             <van-icon name="arrow" />
           </nuxt-link>
@@ -142,7 +142,8 @@ export default {
     onMountedDetailPage(id) {
       this.$store.dispatch('surah/fetchSurahById', {
         id,
-        success: () => {
+        success: data => {
+          this.$store.commit('setHeaderTitle', `${data.name_latin} - ${data.name}`)
           setTimeout(() => {
             this.loading = false
           }, 1000)

@@ -92,7 +92,7 @@ export const actions = {
       setItem(storageKey.FAVORITE_SURAH, newFavorite)
     }
   },
-  removeFromFavorite ({ commit, state }, surah) {
+  removeFromFavoriteSurah ({ commit, state }, surah) {
     const isExist = state.favoriteSurah.find(item => item.index === surah.index)
     if (isExist) {
       const newFavorite = state.favoriteSurah.filter(item => item.index !== surah.index) || []

@@ -2,86 +2,40 @@
   <div class="container">
     <div>
       <logo />
-      <h4>Aplikasi Islami dalam Genggaman</h4>
+      <h4 class="headline">Aplikasi Islami dalam Genggaman</h4>
 
       <lastReadAyahCard v-if="isHaveLastReadAyah" :surah="lastReadAyahData" />
       <div v-else class="card">
-        <div class="content">
-          <span class="title">Belum baca Al-Qur'an hari ini ?</span>
+        <div class="card__content">
+          <span class="card__title">Belum baca Al-Qur'an hari ini ?</span>
           <van-button 
             to="/1"
             round type="default" 
             size="small">Cuss Baca</van-button>
         </div>
-        <img class="bg" src="/quran.webp" alt="al qur'an">
+        <img class="card__bg" src="/quran.webp" alt="al qur'an">
       </div>
 
-      <div class="title-surah">
-        <h4>Daftar Surat</h4>
-        <van-button 
-          @click="searchModal = !searchModal"
-          icon="search" type="default" 
-          size="small" round />
-      </div>
+      <h4 class="headline">Menu Utama</h4>
 
-      <!-- search modal -->
-      <van-popup v-model="searchModal" 
-        round closeable close-icon="close" 
-        @click-close-icon="searchText = ''"
-        @click-overlay="searchText = ''"
-        position="bottom" :style="{ height: '60%' }">
-        <div class="modal-container">
-          <van-search 
-            v-model="searchText" 
-            @clear="searchText = ''"
-            placeholder="Surat apa yang mau dicari ?"
-            shape="round" />
-          <small class="nb">* cari dengan nama surat, arti surat atau nomer surat</small>
-          <van-empty v-if="filteredSurah.length < 1" image="search" description="Tidak ada data surat" />
-          <van-cell 
-            v-for="surah in filteredSurah"
-            :key="`surah-${surah.index}`" size="large"
-            :title="surah.latin" :value="surah.arabic" value-class="arabic"
-            :label="`${surah.translation} • ${surah.ayah_count} Ayat`" center
-            :to="getSurahDetailUrl(surah, surah.index)">
-            <template #icon>
-              <div class="ayah-number">
-                <span class="number">{{ surah.index }}</span>
-                <svg class="icon" width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M49 20.7157L57.2843 29L49 37.2843V49H37.2843L29 57.2843L20.7158 49H9.00003V37.2843L0.715759 29L9.00003 20.7157V9H20.7158L29 0.715729L37.2843 9H49V20.7157ZM54.4559 29L47 36.4558V47H36.4559L29 54.4558L21.5442 47H11V36.4558L3.54419 29L11 21.5442V11H21.5442L29 3.54416L36.4559 11H47V21.5442L54.4559 29Z" fill="#8855CC"/>
-                </svg>
-              </div>
-            </template>
-          </van-cell>
+      <div>{{ quran }}</div>
+
+      <div class="menu__content">
+        <div 
+          v-for="(menu, index) in menus"
+          :key="`menu-${index}`"
+          :style="`background-color: ${menu.color}`"
+          :class="menu.isDisable ? 'menu--disable' : ''"
+          @click="$router.push(menu.link)"
+          class="menu__card">
+          <div class="menu__icon" v-html="menu.icon"></div>
+          <div class="menu__title">{{ menu.title }}</div>
+          <div v-if="menu.isDisable" class="menu--label">{{ menu.label }}</div>
         </div>
-      </van-popup>
+      </div>
 
-      <!-- loading skeleton -->
-      <van-skeleton 
-        v-for="n in 10" :key="n" avatar
-        title :row="1" row-width="100%"
-        style="margin-bottom: 16px"
-        :loading="loading" />
-
-      <!-- list surah -->
-      <van-cell-group>
-        <van-cell 
-          v-for="surah in $store.state.surah.allSurahList"
-          :key="`surah-${surah.index}`" size="large"
-          :title="surah.latin" :value="surah.arabic" value-class="arabic"
-          :label="`${surah.translation} • ${surah.ayah_count} Ayat`" center
-          :to="getSurahDetailUrl(surah, surah.index)">
-          <template #icon>
-            <div class="ayah-number">
-              <span class="number">{{ surah.index }}</span>
-              <svg class="icon" width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M49 20.7157L57.2843 29L49 37.2843V49H37.2843L29 57.2843L20.7158 49H9.00003V37.2843L0.715759 29L9.00003 20.7157V9H20.7158L29 0.715729L37.2843 9H49V20.7157ZM54.4559 29L47 36.4558V47H36.4559L29 54.4558L21.5442 47H11V36.4558L3.54419 29L11 21.5442V11H21.5442L29 3.54416L36.4559 11H47V21.5442L54.4559 29Z" fill="#8855CC"/>
-              </svg>
-            </div>
-          </template>
-        </van-cell>
-
-      </van-cell-group>
+      <!-- Navigation Bottom  -->
+      <NavBottom />
 
     </div>
   </div>
@@ -89,27 +43,32 @@
 
 <script>
 import Logo from '~/components/Logo'
-import lastReadAyahCard from '~/components/LastReadAyahCard'
-import { __isNotEmptyString, __isNotNull, __isNumber } from '~/utils'
+import lastReadAyahCard from '~/components/quran/LastReadAyahCard'
+import NavBottom from '~/components/NavBottom'
+import { __isNotNull } from '~/utils'
+import { AppConstant } from '~/constant'
+import { quran, pray, article, mosque } from '~/assets/icons'
 
 export default {
   name: 'Home',
   components: {
     Logo,
-    lastReadAyahCard
+    lastReadAyahCard,
+    NavBottom
   },
   data: () => ({
     loading: true,
-    searchText: '',
-    searchModal: false
+    menus: [
+      { title: `Al Qur'an`, icon: quran, link: '/quran', color: 'hsl(18deg 90% 90%)', isDisable: false, label: '' },
+      { title: `Do'a Harian`, icon: pray, link: '/doa', color: 'hsl(272deg 85% 90%)', isDisable: false, label: '' },
+      { title: `Artikel Islam`, icon: article, link: '', color: 'hsl(272deg 85% 90%)', isDisable: true, label: 'Coming Soon' },
+      { title: `Jadwal Sholat`, icon: mosque, link: '', color: 'hsl(18deg 90% 90%)', isDisable: true, label: 'Coming Soon' }
+    ]
   }),
 
   computed: {
     isHaveLastReadAyah() {
       return __isNotNull(this.$store.state.surah.lastReadAyah && this.$store.state.surah.lastReadAyah.surah)
-    },
-    isHaveSource() {
-      return __isNotEmptyString(this.$route.query.source)
     },
     lastReadAyahData() {
       if (this.isHaveLastReadAyah) {
@@ -120,53 +79,18 @@ export default {
       }
       return null
     },
-    filteredSurah() {
-      if (__isNotEmptyString(this.searchText) && !isNaN(this.searchText)) {
-        const filtered = this.$store.state.surah.allSurahList.filter(item => Number(this.searchText) === item.index)
-        return filtered
-
-      } else if (__isNotEmptyString(this.searchText) && this.searchText.length >= 3) {
-        const normalizeText = text => text.toLowerCase().replace(/[\W_]+/g, '')
-
-        return this.$store.state.surah.allSurahList.filter(item => {
-          let predicateTranslation = normalizeText(item.translation).includes(
-            normalizeText(this.searchText)
-          )
-          let predicateLatin = normalizeText(item.latin).includes(
-            normalizeText(this.searchText)
-          )
-
-          return predicateTranslation || predicateLatin
-        })
-      } else return []
-    }
   },
 
   mounted() {
-    this.fetchSurahInfo()
-  },
-
-  methods: {
-    getSurahDetailUrl(surah, index) {
-      return `/${index}`
-    },
-
-    fetchSurahInfo() {
-      this.$store.dispatch('surah/fetchAllSurah', {
-        success: () => {
-          if (!this.isHaveSource) {
-            setTimeout(() => {
-              this.loading = false
-            }, 1000)
-          } else this.loading = false
-        }
-      })
-    }
+    this.$store.commit('setHeaderTitle', AppConstant.TITLE)
   }
 }
 </script>
 
 <style lang="less">
+.headline {
+  margin: 24px 0 12px;
+}
 .card {
   background: linear-gradient(135deg, #DD96F9, #995CFE);
   border-radius: 8px;
@@ -177,18 +101,18 @@ export default {
   overflow: hidden;
   animation: 1s appear;
   z-index: 1;
-  .content {
+  &__content {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
   }
-  .title {
+  &__title {
     font-weight: bold;
     margin-bottom: 12px;
   }
-  .bg {
+  &__bg {
     position: absolute;
     bottom: -15%;
     right: 0;
@@ -198,37 +122,56 @@ export default {
     pointer-events: none;
   }
 }
-.ayah-number {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: -16px;
-  margin-right: 16px;
-}
-.ayah-number .number {
-  position: absolute;
-}
-.ayah-number .icon {
-  width: 40px;
+.menu {
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  &__card {
+    // background: linear-gradient(135deg, #DD96F9, #995CFE);
+    background-color: hsl(18deg 90% 85%);
+    border-radius: 8px;
+    padding: 16px;
+    color: #3B1D77;
+    position: relative;
+    height: 100px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  &__icon {
+    font-size: 40px;
+  }
+  &__title {
+    font-weight: bold;
+  }
+  &--label {
+    position: absolute;
+    top: 25px;
+    left: -40px;
+    height: auto;
+    width: 150px;
+    padding: 4px;
+    background: hsl(270deg 100% 40%);
+    transform: rotate(-45deg);
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+  }
+  &--disable {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 }
 @keyframes appear {
   0% {
     opacity: 0;
   }
-}
-.title-surah {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.modal-container {
-  padding: 48px 16px 16px;
-}
-.van-search {
-  padding: 10px 0;
-}
-.nb {
-  font-size: 12px;
-  opacity: .5;
 }
 </style>

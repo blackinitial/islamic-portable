@@ -85,17 +85,17 @@ export const actions = {
     commit('setLastReadAyah', cacheLastReadAyah)
   },
   addToFavoriteSurah ({ commit, state }, surah) {
-    const isExist = state.favoriteSurah.find(item => item.index === surah.index)
+    const isExist = state.favoriteSurah.find(item => item.name === surah.name)
     if (!isExist) {
-      const newFavorite = [].concat(state.favoriteSurah).concat([surah])
+      const newFavorite = [...state.favoriteSurah, surah]
       commit('setFavoriteSurah', newFavorite)
       setItem(storageKey.FAVORITE_SURAH, newFavorite)
     }
   },
   removeFromFavoriteSurah ({ commit, state }, surah) {
-    const isExist = state.favoriteSurah.find(item => item.index === surah.index)
+    const isExist = state.favoriteSurah.find(item => item.name === surah.name)
     if (isExist) {
-      const newFavorite = state.favoriteSurah.filter(item => item.index !== surah.index) || []
+      const newFavorite = state.favoriteSurah.filter(item => item.name !== surah.name) || []
       commit('setFavoriteSurah', newFavorite)
       setItem(storageKey.FAVORITE_SURAH, newFavorite)
     }

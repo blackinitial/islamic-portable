@@ -2,15 +2,18 @@
   <div>
     <Header />
     <Nuxt />
+    <NavBottom />
   </div>
 </template>
 
 <script>
 import Header from '~/components/Header'
+import NavBottom from '~/components/NavBottom'
 export default {
   name: 'DefaultLayout',
   components: {
-    Header
+    Header,
+    NavBottom
   },
   mounted() {
     this.$store.dispatch('surah/readDataFromStorage')
@@ -28,6 +31,7 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
   background: #CED2F9;
+  color: #251150;
   /* scroll-behavior: smooth; */
   scroll-margin-top: 50px;
   scroll-snap-type: y proximity;
@@ -35,7 +39,7 @@ html {
 .container {
   box-sizing: border-box;
   min-height: 100vh;
-  padding: 48px 16px 16px;
+  padding: 24px 16px 16px;
   background: #fff;
   width: clamp(300px, 100%, 500px);
   margin: 0 auto;

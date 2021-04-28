@@ -1,15 +1,20 @@
 <template>
   <section class="container">
-    <!-- navbar -->
-    <!-- <van-nav-bar
-      :title="surahDetail.name_latin"
-      left-arrow fixed z-index="5"
-      @click-left="() => $router.push('/quran')" /> -->
     <!-- hero title -->
     <div class="hero">
       <img class="hero__bg" src="/quran.webp" alt="al qur'an">
       <van-skeleton :row="2" style="margin-bottom: 24px" :loading="loading" />
       <div class="hero__text-decor">{{ surahDetail.name }}</div>
+
+      <div v-if="!isFavoriteSurah" class="hero__favorite" 
+        @click.prevent="addToFavoriteSurah(surahDetail)">
+        <van-icon name="star-o" />
+      </div>
+      <div v-if="isFavoriteSurah" class="hero__favorite" 
+        @click.prevent="removeFromFavoriteSurah(surahDetail)">
+        <van-icon name="star" color="#F9B090" />
+      </div>
+
       <h1 class="title bold">{{ surahDetail.name_latin }}</h1>
       <h4 class="subtitle">{{ surahDetail.translations.id.name }}</h4>
       <hr style="width: 50%" />
@@ -41,31 +46,33 @@
       :loading="loading" />
 
     <!-- list ayah -->
-    <div class="ayah-item"
-      v-for="(ayah, index) in surahDetail.text"
-      :key="`ayah-${index}`"
-      :id="`ayah-${index}`">
-      <div class="ayah-action">
-        <div class="number">{{ index }}</div>
-        <div class="action-group">
-          <van-icon 
-            @click="onSetLastReadAyah(index)"
-            class="icon" :size="24" 
-            title="Simpan baca terakhir"
-            color="#8855CC" :name="getIconLastReadAyah(surahDetail.number, index)" />
-          <van-icon 
-            @click="shareAyah(surahDetail.name_latin, ayah, Number(index))"
-            class="icon" :size="24" 
-            title="Bagikan Ayat"
-            color="#8855CC" name="share-o" />
+    <div class="ayah-list">
+      <div class="ayah-list__item"
+        v-for="(ayah, index) in surahDetail.text"
+        :key="`ayah-${index}`"
+        :id="`ayah-${index}`">
+        <div class="ayah-list__action">
+          <div class="number">{{ index }}</div>
+          <div class="action-group">
+            <van-icon 
+              @click="onSetLastReadAyah(index)"
+              class="icon" :size="24" 
+              title="Simpan baca terakhir"
+              color="#8855CC" :name="getIconLastReadAyah(surahDetail.number, index)" />
+            <van-icon 
+              @click="shareAyah(surahDetail.name_latin, ayah, Number(index))"
+              class="icon" :size="24" 
+              title="Bagikan Ayat"
+              color="#8855CC" name="share-o" />
+          </div>
         </div>
-      </div>
 
-      <div class="ayah-text">
-        <p class="arabic">{{ ayah }}</p>
-        <transition name="van-fade">
-          <p v-show="isTranslation" class="translation">{{ getTranslation(index) }}</p>
-        </transition>
+        <div class="ayah-list__text">
+          <p class="arabic">{{ ayah }}</p>
+          <transition name="van-fade">
+            <p v-show="isTranslation" class="translation">{{ getTranslation(index) }}</p>
+          </transition>
+        </div>
       </div>
     </div>
 
@@ -128,6 +135,11 @@ export default {
     surahId() {
       return Number(this.$route.params.surahId)
     },
+    isFavoriteSurah () {
+      const favArray = this.$store.state.surah.favoriteSurah || []
+      const isExist = favArray.some(item => item.name === this.surahDetail.name)
+      return isExist
+    },
     isHavePrev() {
       return this.surahId > 1
     },
@@ -155,6 +167,20 @@ export default {
       Toast({
         message: 'Ayat telah ditambahkan di Terakhir Dibaca',
         icon: 'label-o',
+      })
+    },
+    addToFavoriteSurah(surah) {
+      this.$store.dispatch('surah/addToFavoriteSurah', surah)
+      Toast({
+        message: `Surat ${surah.name_latin} ditambakan di Favorit`,
+        icon: 'star-o',
+      })
+    },
+    removeFromFavoriteSurah(surah) {
+      this.$store.dispatch('surah/removeFromFavoriteSurah', surah)
+      Toast({
+        message: `Surat ${surah.name_latin} dihapus dari Favorit`,
+        icon: 'star-o',
       })
     },
     onSearchAyah(value) {
@@ -215,7 +241,7 @@ export default {
   overflow: hidden;
   animation: 1s appear;
   z-index: 1;
-  margin: 24px 0 24px 0;
+  margin: 48px 0 24px 0;
   &__bg {
     position: absolute;
     bottom: 0;
@@ -238,6 +264,12 @@ export default {
     white-space: nowrap;
     pointer-events: none;
   }
+  &__favorite {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-size: 32px;
+  }
   .title, .subtitle {
     margin: 0;
     margin-bottom: 1rem;
@@ -251,15 +283,18 @@ export default {
     opacity: 0;
   }
 }
-.ayah-item {
-  margin-bottom: 24px;
-  background: rgb(221 150 249 / 10%);
-  padding: 12px;
-  border-radius: 8px;
-  transition: all .5s;
-  scroll-behavior: smooth;
-  scroll-padding-top: 50px;
-  .ayah-action {
+.ayah-list {
+  padding-bottom: 24px;
+  &__item {
+    margin-bottom: 24px;
+    background: rgb(221 150 249 / 10%);
+    padding: 12px;
+    border-radius: 8px;
+    transition: all .5s;
+    scroll-behavior: smooth;
+    scroll-padding-top: 50px;
+  }
+  &__action {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -281,7 +316,7 @@ export default {
       justify-content: center;
     }
   }
-  .ayah-text {
+  &__text {
     transition: all .5s;
     .arabic {
       text-align: right;
@@ -295,6 +330,7 @@ export default {
       margin-top: 24px;
     }
   }
+
 }
 
 .setting {

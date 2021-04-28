@@ -5,15 +5,15 @@
       <h4 class="headline">Aplikasi Islami dalam Genggaman</h4>
 
       <lastReadAyahCard v-if="isHaveLastReadAyah" :surah="lastReadAyahData" />
-      <div v-else class="card">
-        <div class="card__content">
-          <span class="card__title">Belum baca Al-Qur'an hari ini ?</span>
+      <div v-else class="hero-card">
+        <div class="hero-card__content">
+          <span class="hero-card__title">Belum baca Al-Qur'an hari ini ?</span>
           <van-button 
             to="/1"
             round type="default" 
-            size="small">Cuss Baca</van-button>
+            size="small">Cuss Baca !</van-button>
         </div>
-        <img class="card__bg" src="/quran.webp" alt="al qur'an">
+        <img class="hero-card__bg" src="/quran.webp" alt="al qur'an">
       </div>
 
       <h4 class="headline">Menu Utama</h4>
@@ -34,9 +34,6 @@
         </div>
       </div>
 
-      <!-- Navigation Bottom  -->
-      <NavBottom />
-
     </div>
   </div>
 </template>
@@ -44,7 +41,6 @@
 <script>
 import Logo from '~/components/Logo'
 import lastReadAyahCard from '~/components/quran/LastReadAyahCard'
-import NavBottom from '~/components/NavBottom'
 import { __isNotNull } from '~/utils'
 import { AppConstant } from '~/constant'
 import { quran, pray, article, mosque } from '~/assets/icons'
@@ -53,8 +49,7 @@ export default {
   name: 'Home',
   components: {
     Logo,
-    lastReadAyahCard,
-    NavBottom
+    lastReadAyahCard
   },
   data: () => ({
     loading: true,
@@ -88,40 +83,6 @@ export default {
 </script>
 
 <style lang="less">
-.headline {
-  margin: 24px 0 12px;
-}
-.card {
-  background: linear-gradient(135deg, #DD96F9, #995CFE);
-  border-radius: 8px;
-  padding: 16px;
-  color: #fff;
-  position: relative;
-  height: 100px;
-  overflow: hidden;
-  animation: 1s appear;
-  z-index: 1;
-  &__content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-  }
-  &__title {
-    font-weight: bold;
-    margin-bottom: 12px;
-  }
-  &__bg {
-    position: absolute;
-    bottom: -15%;
-    right: 0;
-    transform: scale(.8) translateX(10%) rotate(25deg);
-    opacity: .75;
-    z-index: -1;
-    pointer-events: none;
-  }
-}
 .menu {
   &__content {
     display: grid;
@@ -167,11 +128,6 @@ export default {
   &--disable {
     cursor: not-allowed;
     opacity: 0.5;
-  }
-}
-@keyframes appear {
-  0% {
-    opacity: 0;
   }
 }
 </style>

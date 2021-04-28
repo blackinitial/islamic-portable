@@ -29,8 +29,11 @@ export default {
   computed: {
     isHomePage: (vm) => vm.$store.state.headerTitle === AppConstant.TITLE,
     isQuranPage: (vm) => vm.$store.state.headerTitle === AppConstant.QURAN_TITLE,
+    isBookmarkPage: (vm) => vm.$store.state.headerTitle === AppConstant.BOOKMARK,
+    isFavoritePage: (vm) => vm.$store.state.headerTitle === AppConstant.FAVORITE,
+    isAboutPage: (vm) => vm.$store.state.headerTitle === AppConstant.ABOUT,
     isSpecialPage() {
-      return this.isHomePage || this.isQuranPage
+      return this.isHomePage || this.isQuranPage || this.isBookmarkPage || this.isFavoritePage || this.isAboutPage
     },
     isBackOnly() {
       return this.isQuranPage

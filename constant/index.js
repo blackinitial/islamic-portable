@@ -1,6 +1,9 @@
 export const AppConstant = {
   TITLE: "Islamic Portable",
-  QURAN_TITLE: "Al Qur'an"
+  QURAN_TITLE: "Al Qur'an",
+  BOOKMARK: "Penanda",
+  FAVORITE: "Favorit",
+  ABOUT: "Tentang"
 }
 
 export const ApiPath = {

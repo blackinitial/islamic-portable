@@ -40,6 +40,9 @@
 // paginate
 @pagination-item-default-color: @gray-4;
 
+// group cell
+@cell-group-title-color: #797484;
+
 // hack
 body {
   &::-webkit-scrollbar {
@@ -53,6 +56,22 @@ body {
     border-radius: 4px;
   }
 }
+ul {
+  list-style: inside;
+}
+ul.list-style-none {
+  list-style: none;
+}
+.van-cell {
+  padding: 10px 0;
+  &:after {
+    right: 0;
+    left: 0;
+  }
+}
+.van-cell-group__title {
+  padding: 0 0 8px;
+}
 
 // utility
 .arabic {
@@ -61,4 +80,60 @@ body {
 }
 .bold {
   font-weight: 700;
+}
+.headline {
+  margin: 24px 0 12px;
+}
+.subheadline {
+  margin: 0 0 12px;
+  color: #595563;
+}
+.content-container {
+  padding: 10px 16px;
+}
+.space-24 {
+  margin-bottom: 24px;
+}
+.space-48 {
+  margin-bottom: 48px;
+}
+
+// card
+.hero-card {
+  background: linear-gradient(135deg, #DD96F9, #995CFE);
+  border-radius: 8px;
+  padding: 16px;
+  color: #fff;
+  position: relative;
+  height: 100px;
+  overflow: hidden;
+  animation: 1s appear;
+  z-index: 1;
+  &__content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  &__title {
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+  &__bg {
+    position: absolute;
+    bottom: -15%;
+    right: 0;
+    transform: scale(.8) translateX(10%) rotate(25deg);
+    opacity: .75;
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+
+// animation
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
 }

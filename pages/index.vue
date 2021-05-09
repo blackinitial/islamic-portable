@@ -18,8 +18,6 @@
 
       <h4 class="headline">Menu Utama</h4>
 
-      <div>{{ quran }}</div>
-
       <div class="menu__content">
         <div 
           v-for="(menu, index) in menus"

@@ -204,8 +204,6 @@ export default {
       } else return 'label-o'
     },
     shareAyah(surah, ayah, index) {
-      // console.log(`${ayah}\n\nArtinya:\n${this.getTranslation(index)}\n(${surah}:${index})\n\nIslamic Portable App`)
-
       if (navigator.share) {
         navigator.share({
           title: `${surah}:${index}`,

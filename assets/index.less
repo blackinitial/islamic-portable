@@ -72,6 +72,13 @@ ul.list-style-none {
 .van-cell-group__title {
   padding: 0 0 8px;
 }
+.van-collapse-item--border::after {
+  right: 0;
+  left: 0;
+}
+.van-hairline--top-bottom::after {
+  border-width: 0;
+}
 
 // utility
 .arabic {
@@ -96,6 +103,9 @@ ul.list-style-none {
 }
 .space-48 {
   margin-bottom: 48px;
+}
+.align-right {
+  text-align: right;
 }
 
 // card
@@ -122,9 +132,9 @@ ul.list-style-none {
   }
   &__bg {
     position: absolute;
-    bottom: -15%;
-    right: 0;
-    transform: scale(.8) translateX(10%) rotate(25deg);
+    bottom: -10px;
+    right: 5%;
+    transform: scale(.8) rotate(25deg);
     opacity: .75;
     z-index: -1;
     pointer-events: none;

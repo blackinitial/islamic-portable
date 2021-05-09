@@ -17,6 +17,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('surah/readDataFromStorage')
+    this.$store.dispatch('doa/readDataFromStorage')
     this.$store.dispatch('surah/fetchAllSurah', {success: () => {}})
   }
 }

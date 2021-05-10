@@ -16,6 +16,7 @@
     <ul>
       <li><a href="https://github.com/rioastamal/quran-json">quran-json</a> oleh <a href="https://github.com/rioastamal">@rioastamal</a></li>
       <li><a href="https://github.com/mazipan/quran-offline">quran-offline</a> oleh <a href="https://github.com/mazipan">@mazipan</a></li>
+      <li><a href="https://play.google.com/store/apps/details?id=com.barakahapps.hisnulmuslimbahasaindonesia">Hisnul Muslim (Bahasa Indonesia, Doa & Dzikir)</a></li>
     </ul>
     <br>
     <small>Dibuat oleh <a href="https://github.com/blackinitial">Ibrohim Mahmud Hanafi</a><br/>Copyright © 2021</small>

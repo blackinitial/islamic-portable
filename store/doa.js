@@ -47,7 +47,7 @@ export const actions = {
   },
   readDataFromStorage ({ commit }) {
     const cacheFavoriteDoa = getItem(storageKey.FAVORITE_DOA) || []
-    commit('setFavoriteSurah', cacheFavoriteDoa)
+    commit('setFavoriteDoa', cacheFavoriteDoa)
   },
   addToFavoriteDoa ({ commit, state }, doa) {
     const isExist = state.favoriteDoa.find(item => item.title === doa.title)

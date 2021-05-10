@@ -43,6 +43,9 @@
 // group cell
 @cell-group-title-color: #797484;
 
+// collapse
+@collapse-item-content-background-color: @gray-2;
+
 // hack
 body {
   &::-webkit-scrollbar {
@@ -75,6 +78,19 @@ ul.list-style-none {
 .van-collapse-item--border::after {
   right: 0;
   left: 0;
+}
+// .van-collapse-item__content {
+//   border-radius: 8px;
+// }
+.van-collapse-item__wrapper {
+  box-shadow: 0px 5px 8px 2px #f3e5f5;
+  border-radius: 8px;
+  margin: 0 0 16px;
+}
+.van-collapse-item__title--expanded {
+  &:after {
+    border-bottom: 0;
+  }
 }
 .van-hairline--top-bottom::after {
   border-width: 0;

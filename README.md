@@ -21,7 +21,7 @@ $ npm run generate
 
 ## Feature
 - [x] Al Qur'an
-- [ ] Do'a Harian
+- [x] Do'a Harian
 - [ ] Artikel Islami
 - [ ] Jadwal Sholat
 

@@ -38,17 +38,16 @@
           :name="doa.index"
           :id="`doa-${doa.index}`">
           <div>
+            <div class="share-button-wrapper">
+              <van-button 
+                @click="shareDoa(doa.title, doa.text)" color="#7142d7"
+                round icon="share-o" size="small">Bagikan Do'a</van-button>
+            </div>
             <div v-for="(item, index) in doa.text" :key="`doa-${index}`">
               <div class="arabic align-right">{{ item.arabic }}</div>
               <p><strong>{{ item.latin }}</strong></p>
               <p><i>{{ item.translation }}</i></p>
               <p>({{ item.source }})</p>
-              <van-icon 
-                v-if="index == doa.text.length - 1"
-                @click="shareDoa(doa.title, doa.text)"
-                class="share-button" :size="24" 
-                title="Bagikan Do'a"
-                color="#8855CC" name="share-o" />
               <hr class="line-doa" v-if="doa.text.length > 1 && !(index + 1 == doa.text.length)">
             </div>
           </div>
@@ -138,14 +137,14 @@ export default {
     addToFavoriteDoa(doa) {
       this.$store.dispatch('doa/addToFavoriteDoa', doa)
       Toast({
-        message: `${doa.title} ditambakan di Favorit`,
+        message: `Do'a telah ditambakan di Favorit`,
         icon: 'star-o',
       })
     },
     removeFromFavoriteDoa(doa) {
       this.$store.dispatch('doa/removeFromFavoriteDoa', doa)
       Toast({
-        message: `${doa.title} dihapus dari Favorit`,
+        message: `Do'a telah dihapus dari Favorit`,
         icon: 'star-o',
       })
     },
@@ -204,9 +203,10 @@ export default {
     font-size: 18px;
   }
 }
-.share-button {
+.share-button-wrapper {
   width: 100%;
-  text-align: right;
+  text-align: center;
+  margin-bottom: 8px;
 }
 .title-doa {
   display: flex;
@@ -225,6 +225,6 @@ export default {
 }
 .line-doa {
   margin: 16px 0;
-  color: hsl(259, 65%, 79%);
+  border-color: hsl(259, 65%, 79%);
 }
 </style>

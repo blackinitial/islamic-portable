@@ -9,12 +9,10 @@ Islamic Portable adalah sebuah app yang berisi berbagai aplikasi Islami seperti 
 [https://islamic-portable.netlify.com/](https://islamic-portable.netlify.com/)
 
 ## Screenshot
-![Home Page](https://raw.githubusercontent.com/blackinitial/islamic-portable/main/screenshot/home-page.png)
-![Quran Page](https://raw.githubusercontent.com/blackinitial/islamic-portable/main/screenshot/quran-page.png)
-![Surah Page](https://raw.githubusercontent.com/blackinitial/islamic-portable/main/screenshot/surah-page.png)
-![Do'a Page](https://raw.githubusercontent.com/blackinitial/islamic-portable/main/screenshot/doa-page.png)
-![Doa Collapsed](https://raw.githubusercontent.com/blackinitial/islamic-portable/main/screenshot/doa-page-collapsed.png)
-![Bookmark Page](https://raw.githubusercontent.com/blackinitial/islamic-portable/main/screenshot/bookmark-page.png)
+
+![Home Page](https://raw.githubusercontent.com/blackinitial/islamic-portable/main/screenshot/home-page.png) | ![Quran Page](https://raw.githubusercontent.com/blackinitial/islamic-portable/main/screenshot/quran-page.png) | ![Surah Page](https://raw.githubusercontent.com/blackinitial/islamic-portable/main/screenshot/surah-page.png)
+--- | --- | ---
+![Do'a Page](https://raw.githubusercontent.com/blackinitial/islamic-portable/main/screenshot/doa-page.png) | ![Doa Collapsed](https://raw.githubusercontent.com/blackinitial/islamic-portable/main/screenshot/doa-page-collapsed.png) | ![Bookmark Page](https://raw.githubusercontent.com/blackinitial/islamic-portable/main/screenshot/bookmark-page.png)
 ![Favorite Page](https://raw.githubusercontent.com/blackinitial/islamic-portable/main/screenshot/favorite-page.png)
 ## Build Setup
 
